@@ -1,0 +1,41 @@
+name: 检查并发布当前版本
+on:
+  push:
+    branches: [main]
+    paths: [releases/v0.1.0.md]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: 静态检查
+        run: |
+          node scripts/check-start-end.mjs
+          node scripts/check-ams-timelapse.mjs
+      - name: 打包最新版
+        run: python3 scripts/package-release.py
+      - name: 发布预发布版本与附件
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view v0.1.0 >/dev/null 2>&1; then
+            echo 'v0.1.0 already exists; refusing to overwrite a published release.'
+            exit 0
+          fi
+          gh release create v0.1.0 \
+            --target "$GITHUB_SHA" \
+            --title 'v0.1.0｜P1S 硅胶擦嘴 G-code' \
+            --notes-file releases/v0.1.0.md \
+            --prerelease \
+            outputs/bambu-p1s-silicone-wiper-v0.1.0.zip \
+            outputs/SHA256SUMS.txt \
+            latest/machine_start.gcode \
+            latest/machine_end.gcode \
+            latest/change_filament.gcode \
+            latest/timelapse.gcode
