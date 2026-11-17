@@ -1,0 +1,25 @@
+{
+  "release": "v0.1.0",
+  "status": "prerelease-static-checked",
+  "baseline": "Bambu Studio 2.8.2.61 / P1S 0.4",
+  "versions": {
+    "machine_start": "r7",
+    "machine_end": "r7",
+    "change_filament": "r5",
+    "timelapse": "r4"
+  },
+  "files": {
+    "machine_start.gcode": {
+      "sha256": "724ed529eb8cfb169bcf5741b6d8c98b231374efd4312db5e4221b24c782a44c"
+    },
+    "machine_end.gcode": {
+      "sha256": "1c0142b9290c1f4688604b3338866fddadc16f7763d068e289255a2741055563"
+    },
+    "change_filament.gcode": {
+      "sha256": "beddafb40837195f2c40b68c140d534c646aa9523ecd08df072a93ddcf8723ea"
+    },
+    "timelapse.gcode": {
+      "sha256": "24913551fbfe3676c7144c368e46f3dbf568e8d7af282a69d6d7c6e3511cbe34"
+    }
+  }
+}
